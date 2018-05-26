@@ -52,19 +52,19 @@ public class BerlinClock implements TimeConverter {
 		if (minutes % 5 == 0) {
 			int firstRowPosition = 0;
 			
-			firstRowPosition = generateCorrectMinutesPattern(minutes,
+			firstRowPosition = BerlinClockUtil.generateCorrectMinutesPattern(minutes,
 					firstRowMinutes, firstRowPosition);
 			
-			generateHoursPatternForEmptyPosition(firstRowMinutes,
+			BerlinClockUtil.generateHoursPatternForEmptyPosition(firstRowMinutes,
 					firstRowPosition);
-			generateEmptyRows(secondRowMinutes);
+			BerlinClockUtil.generateEmptyRows(secondRowMinutes);
 			
 		} else {
 			int firstRowPosition = 0;
 			
-			firstRowPosition = generateCorrectMinutesPattern(minutes,
+			firstRowPosition = BerlinClockUtil.generateCorrectMinutesPattern(minutes,
 					firstRowMinutes, firstRowPosition);
-			generateHoursPatternForEmptyPosition(firstRowMinutes,
+			BerlinClockUtil.generateHoursPatternForEmptyPosition(firstRowMinutes,
 					firstRowPosition);
 
 			int reminder = minutes % 5;
@@ -72,26 +72,12 @@ public class BerlinClock implements TimeConverter {
 			for (; secondRowPosition < reminder; secondRowPosition++) {
 				secondRowMinutes[secondRowPosition] = "Y";
 			}
-			generateHoursPatternForEmptyPosition(secondRowMinutes,
+			BerlinClockUtil.generateHoursPatternForEmptyPosition(secondRowMinutes,
 					secondRowPosition);
 		}
 	}
 
-	int generateCorrectMinutesPattern(int minutes,
-			String[] minuteRow, int rowPosition) {
-		
-		int quotient = minutes / 5;
-		for (; rowPosition < quotient; rowPosition++) {
-			
-			if (rowPosition > 0 && (rowPosition + 1) % 3 == 0) {
-				minuteRow[rowPosition] = "R";
-			} else {
-				minuteRow[rowPosition] = "Y";
-			}
-			
-		}
-		return rowPosition;
-	}
+	
 
 	void generateHoursPattern(int hrs, String[] firstRowHours,
 			String[] secondRowHours) {
@@ -101,12 +87,12 @@ public class BerlinClock implements TimeConverter {
 		if (hrs % 5 == 0) {
 			int firstRowPosition = 0;
 			
-			firstRowPosition = generateCorrectHoursPosition(quotient, firstRowHours,
+			firstRowPosition = BerlinClockUtil.generateCorrectHoursPosition(quotient, firstRowHours,
 					firstRowPosition);
 			
-			generateHoursPatternForEmptyPosition(firstRowHours,
+			BerlinClockUtil.generateHoursPatternForEmptyPosition(firstRowHours,
 					firstRowPosition);
-			generateEmptyRows(secondRowHours);
+			BerlinClockUtil.generateEmptyRows(secondRowHours);
 			
 		} else {
 			
@@ -115,43 +101,18 @@ public class BerlinClock implements TimeConverter {
 			int firstRowPosition = 0;
 			int secondRowPosition = 0;
 			
-			firstRowPosition = generateCorrectHoursPosition(quotient, firstRowHours,
+			firstRowPosition = BerlinClockUtil.generateCorrectHoursPosition(quotient, firstRowHours,
 					firstRowPosition);
-			secondRowPosition = generateCorrectHoursPosition(reminder,
+			secondRowPosition = BerlinClockUtil.generateCorrectHoursPosition(reminder,
 					secondRowHours, secondRowPosition);
 					
-			generateHoursPatternForEmptyPosition(firstRowHours,
+			BerlinClockUtil.generateHoursPatternForEmptyPosition(firstRowHours,
 					firstRowPosition);
-			generateHoursPatternForEmptyPosition(secondRowHours,
+			BerlinClockUtil.generateHoursPatternForEmptyPosition(secondRowHours,
 					secondRowPosition);
 		}
 	}
 
-
-
-	int generateCorrectHoursPosition(int value,  String[] rowHours,
-			int rowPosition) {
-
-		for (; rowPosition < value; rowPosition++) {
-			rowHours[rowPosition] = "R";
-		}
-		return rowPosition;
-	}
-
-	void generateEmptyRows(String[] rowArray) {
-		for (int rowPosition = 0; rowPosition < rowArray.length; rowPosition++) {
-			rowArray[rowPosition] = "O";
-		}
-	}
-
-	void generateHoursPatternForEmptyPosition(String[] rows,
-			int rowPosition) {
-		if (rowPosition < rows.length) {
-			for (; rowPosition < rows.length; rowPosition++) {
-				rows[rowPosition] = "O";
-			}
-		}
-	}
 
 	void generateSecondsPattern(int seconds, String[] second) {
 		if (seconds % 2 == 0) {
